@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Задача 1</title>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <h2>Задача 1.</h2>
+      <p>Знайти суми елементів у вказаній області.</p>
+      <ol>
+        <li>
+          <table>
+            <tr>
+              <td>+</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </li>
+        <li>
+          <table>
+            <tr>
+              <td></td>
+              <td>+</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+        </li>
+        <li>
+          <table>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>+</td>
+              <td></td>
+            </tr>
+          </table>
+        </li>
+        <li>
+          <table>
+            <tr>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>+</td>
+            </tr>
+          </table>
+        </li>
+        <li>Суму парних рядків;</li>
+        <li>Суму непарних стовпців;</li>
+        <li>У парних рядках – непарні стовпці, у непарних – парні.</li>
+      </ol>
+    </div>
+    <script>
+      let arr = []
+      for (let rowIndex = 0; rowIndex < 8; rowIndex++) {
+        let arrRow = []
+        for (let colIndex = 0; colIndex < 8; colIndex++) {
+          const minNumber = 1
+          const maxNumber = 20
+          arrRow.push(Math.floor(Math.random() * maxNumber) + minNumber)
+        }
+        arr.push(arrRow)
+      }
+
+      function getSum(
+        arr,
+        startRowNumber,
+        lastRowNumber,
+        startColNumber,
+        lastColNumber
+      ) {
+        sum = 0
+        for (let r = startRowNumber; r < lastRowNumber; r++) {
+          for (let c = startColNumber; c < lastColNumber; c++) {
+            sum += arr[r][c]
+          }
+        }
+        return sum
+      }
+      function sumOfPairedRows(arr) {
+        sumOfPairedRows = 0
+        for (let r = 1; r < arr.length; r += 2) {
+          for (let c = 0; c < arr[r].length; c++) {
+            sumOfPairedRows += arr[r][c]
+          }
+        }
+        return sumOfPairedRows
+      }
+      function sumOfUnpairedColumns(arr) {
+        sumOfUnpairedColumns = 0
+        for (let r = 0; r < arr.length; r++) {
+          for (let c = 0; c < arr[r].length; c += 2) {
+            sumOfUnpairedColumns += arr[r][c]
+          }
+        }
+        return sumOfUnpairedColumns
+      }
+      function sumOfPairedWithUnpaired(arr) {
+        let sumOfPairedWithUnpaired = 0
+        for (let rowIndex = 0; rowIndex < arr.length; rowIndex++) {
+          let startColIndex
+          if (rowIndex % 2 === 0) startColIndex = 1
+          else startColIndex = 0
+          for (
+            let colIndex = startColIndex;
+            colIndex < arr[rowIndex].length;
+            colIndex += 2
+          ) {
+            sumOfPairedWithUnpaired += arr[rowIndex][colIndex]
+          }
+        }
+        return sumOfPairedWithUnpaired
+      }
+      document.write("<table><tbody>")
+      document.write(
+        `<tr><td>суми елементів у вказаній області :</td><td>${getSum(
+          arr,
+          0,
+          4,
+          0,
+          4
+        )}</td></tr>`
+      )
+      document.write(
+        `<tr><td>суми елементів у вказаній області :</td><td>${getSum(
+          arr,
+          4,
+          8,
+          0,
+          4
+        )}</td></tr>`
+      )
+      document.write(
+        `<tr><td>суми елементів у вказаній області :</td><td>${getSum(
+          arr,
+          0,
+          4,
+          4,
+          8
+        )}</td></tr>`
+      )
+      document.write(
+        `<tr><td>суми елементів у вказаній області :</td><td>${getSum(
+          arr,
+          4,
+          8,
+          4,
+          8
+        )}</td></tr>`
+      )
+      document.write(
+        `<tr><td>суму парних рядків :</td><td>${sumOfPairedRows(arr)}</td></tr>`
+      )
+      document.write(
+        `<tr><td>суму непарних стовпців :</td><td>${sumOfUnpairedColumns(
+          arr
+        )}</td></tr>`
+      )
+      document.write(
+        `<tr><td>суму парних рядках – непарні стовпці, у непарних – парні :</td><td>${sumOfPairedWithUnpaired(
+          arr
+        )}</td></tr>`
+      )
+      document.write("</tbody></table>")
+    </script>
+  </body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@800&family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>Задача 3</title>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <h2>Задача 3.</h2>
+      <p>
+        Морський бій. Випадковим чином на двовимірному полі розміром 6*6
+        розташовується 5 кораблів. Користувач стріляє вказуючи координати. Гра
+        продовжується поки не потоплено усі кораблі або у користувача не
+        закінчаться снаряди.
+      </p>
+    </div>
+    <script>
+      const maxPlayingField = 6
+      let numberOfShips = 5
+      let playingField = []
+      for (let row = 0; row < maxPlayingField; row++) {
+        let arrRow = []
+        for (let col = 0; col < maxPlayingField; col++) {
+          arrRow.push(0)
+        }
+        playingField.push(arrRow)
+      }
+
+      function getRandomPositionOfShips() {
+        for (let i = 0; i < numberOfShips; i++) {
+          let posX = Math.floor(Math.random() * maxPlayingField)
+          let posY = Math.floor(Math.random() * maxPlayingField)
+          if (playingField[posX][posY] === 0) playingField[posX][posY] = 1
+          else i--
+        }
+        return playingField
+      }
+      document.write(
+        `<h3>${getRandomPositionOfShips(
+          playingField,
+          numberOfShips,
+          maxPlayingField
+        )}</h3>`
+      )
+      let numberOfShots = parseInt(prompt("Введіть кількість пострілів", ""))
+      while (numberOfShots > 0 && numberOfShips > 0) {
+        let x = parseInt(prompt("Введіть координати по X від 1 до 6", ""))
+        let y = parseInt(prompt("Введіть координати по Y від 1 до 6", ""))
+        if (playingField[x - 1][y - 1] === 1) {
+          numberOfShips -= 1
+          alert(`Ви влучили. Лишилось ${numberOfShips} кораблі.`)
+        } else alert("Ви не влучили.")
+        numberOfShots -= 1
+      }
+      if (numberOfShips === 0) document.write("<h3>Ви виграли!!!</h3>")
+      else document.write("<h3>Ви програли.</h3>")
+    </script>
+  </body>
+</html>
